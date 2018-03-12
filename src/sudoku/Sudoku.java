@@ -95,7 +95,13 @@ public class Sudoku
     {
         
     }
-
+    
+    /**
+     * compruebo la fila donde se va a insertar el numero
+     * @param fila fila de la insercion 
+     * @param elemento numero a insertar
+     * @return si se puede en esta fila o no insertar el elemento
+     */
     private boolean comprobarFila(int fila, int elemento) 
     {
         boolean solucion = true;
