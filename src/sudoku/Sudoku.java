@@ -17,7 +17,7 @@ public class Sudoku
 {
     // Variables privadas de la clase
     //array donde se almacenaran los numeros del sudoku
-    private ArrayList<ArrayList<Integer>> numeros_sudoku;
+    private ArrayList<ArrayList<Integer>> sudoku;
     
     /**
      * contructor de la clase sudoku
@@ -32,8 +32,8 @@ public class Sudoku
      */
     public void inicializar() 
     {
-        ArrayList<ArrayList<Integer>> solucion = new ArrayList();
-        ArrayList<Integer> numeros = new ArrayList();
+        sudoku = new ArrayList();
+        ArrayList<Integer> lista;
         Random aleatorio = new Random();
         boolean cent = true;
         int contador = 0;
@@ -41,13 +41,14 @@ public class Sudoku
         *creamos todos los espacios del sudoku para posteriormente introducir
         *numeros aleatorios 
         */
-        for (int i = 0; i < 27 ; i++) {
-            ArrayList<Integer> insercion = new ArrayList();
-            for (int j = 0; j < 3; j++) {
-                insercion.add(0);
+        for (int i = 0; i < 9 ; i++) {
+            lista = new ArrayList();
+            for (int j = 0; j < 9; j++) {
+                lista.add(0);
             }
-            solucion.add(insercion);
+            sudoku.add(lista);
         }
+        
         /*
         *añadimos los numeros generados de manera aleatorioa al sudoku y 
         *cumpliendo las normas de no repetir numeros donde corresponda
@@ -60,16 +61,12 @@ public class Sudoku
             */
             cent = true;
             while(cent){
-                int num_fila = aleatorio.nextInt(3);
-                int num_columna = aleatorio.nextInt(solucion.size()-1);
+                int num_fila = aleatorio.nextInt(9);
+                int num_columna = aleatorio.nextInt(9);
                 int num_insertar = aleatorio.nextInt(9)+1;
-                if(!comprobarFila(num_columna,num_insertar)){
-                    if (!comprobarColumna(num_columna,num_insertar)) {
-                        if (!comprobarCuadrante(num_fila, num_columna,num_insertar)) {
-                            solucion.get(num_columna).set(num_fila, num_insertar);
-                            cent = false;
-                        }
-                    }
+                if (puedoInsertar(num_fila, num_columna, num_insertar)) {
+                    sudoku.get(num_fila).set(num_columna, num_insertar);
+                    cent = false;
                 }
             }
         }
@@ -78,8 +75,14 @@ public class Sudoku
     @Override
     public String toString()
     {
-        String resultadoFinal = "";
+        String resultadoFinal = "+-------------------------+\n";
 
+        for (int i = 0; i < sudoku.size(); i++) {
+            for (int j = 0; j < sudoku.get(i).size(); j++) {
+                resultadoFinal += "|"+sudoku.get(i).get(j)+"|";
+            }
+            resultadoFinal += "\n+-------------------------+\n";
+        }
         return resultadoFinal;
     }
 
@@ -95,9 +98,13 @@ public class Sudoku
 
     private boolean comprobarFila(int fila, int elemento) 
     {
-        boolean resultado = true;
-
-        return resultado;
+        boolean solucion = true;
+        for (int i = 0; i < 9; i++) {
+            if (this.sudoku.get(fila).get(i) == elemento) {
+                solucion = false;
+            }
+        }
+        return solucion;
     }
 
     private boolean comprobarColumna(int columna, int elemento) 
@@ -114,10 +121,19 @@ public class Sudoku
         return resultado;
     }
 
+    /**
+     * se comprueba si un numero puede insertarse
+     * @param fila la fila del sudoku donde se quiere insertar el numero
+     * @param columna ela columna donde se quiere insertar el numero
+     * @param elemento el numero a insertar
+     * @return retorna si se puede insertar o no el numero
+     */
     private boolean puedoInsertar(int fila, int columna, int elemento) 
     {
-        boolean resultado = false;
-
+        boolean resultado = true;
+        if (!comprobarFila(fila, elemento) || !comprobarColumna(columna, elemento) || !comprobarCuadrante(fila, columna, elemento)) {
+            resultado = false;
+        }
         return resultado; 
     } 
 } 
