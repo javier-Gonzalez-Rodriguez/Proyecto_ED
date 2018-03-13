@@ -10,5 +10,9 @@ package sudoku;
  * @author Poniente
  */
 class SudokuException extends Exception {
+
+    public SudokuException(String message) {
+        super(message);
+    }
     
 }

@@ -72,6 +72,10 @@ public class Sudoku
         }
     }
 
+    /**
+     * formateamos el array para mostrarlo por pantalla
+     * @return retorna el array formateado
+     */
     @Override
     public String toString()
     {
@@ -86,14 +90,28 @@ public class Sudoku
         return resultadoFinal;
     }
 
+    /**
+     * intentamos insertar un numero en una posicion del sudoku
+     * @param fila fila donde se insertara el numero
+     * @param columna columna donde se insertara el numero 
+     * @param elemento numero a insertar
+     * @throws SudokuException exception para controlar el numero que se va a insertar
+     */
     public void modificarElemento(int fila, int columna, int elemento) throws SudokuException 
     {
-        
+        if (puedoInsertar(fila, columna, elemento)) {
+            sudoku.get(fila).set(columna, elemento);
+        }
     }
     
+    /**
+     * eliminamos un elemento
+     * @param fila fila que se va a vaciar
+     * @param columna columna que se va a vaciar
+     */
     public void vaciarElemento(int fila, int columna)
     {
-        
+        sudoku.get(fila).set(columna, 0);
     }
     
     /**
@@ -112,11 +130,21 @@ public class Sudoku
         }
         return solucion;
     }
-
+    
+    /**
+     * comprueba la columna del sudoku
+     * @param columna numero de la columna
+     * @param elemento numero a insertar
+     * @return devuelve si se puede insertar en esa columna o no
+     */
     private boolean comprobarColumna(int columna, int elemento) 
     {
         boolean resultado = true;
-
+        for(int i = 0; i < sudoku.size(); i++){
+            if (sudoku.get(i).get(columna) == elemento) {
+                    resultado = false;
+            }
+        }
         return resultado;
     }
 
