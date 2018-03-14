@@ -99,8 +99,13 @@ public class Sudoku
      */
     public void modificarElemento(int fila, int columna, int elemento) throws SudokuException 
     {
-        if (puedoInsertar(fila, columna, elemento)) {
-            sudoku.get(fila).set(columna, elemento);
+        if (elemento > 0 || elemento<10) {
+            if (puedoInsertar(fila, columna, elemento)) {
+                sudoku.get(fila).set(columna, elemento);
+            }
+        }
+        else{
+            throw new SudokuException("numero no valido");
         }
     }
     
@@ -148,10 +153,103 @@ public class Sudoku
         return resultado;
     }
 
+    /**
+     * comprobamos el cuadrante al que va a pertenecer el numero
+     * @param fila fila donde se insertara el numero
+     * @param columna columna donde se insertara el numero
+     * @param elemento numero que se quiere insertar
+     * @return nos devuelve si se puede o no insertar el numero
+     */
     private boolean comprobarCuadrante(int fila, int columna, int elemento) 
     {
         boolean resultado = true;
-        
+        if (fila==0 || fila<3) {
+            if (columna==0 || columna<3) {
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+            if (columna >= 3 && columna < 6) {
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 3; j < 6; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+            if (columna >= 6 && columna < 9) {
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 3; j < 6; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+        }
+        if (fila >= 3 && fila <5) {
+            if (columna==0 || columna<3) {
+                for (int i = 3; i < 6; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+            if (columna >= 3 && columna < 6) {
+                for (int i = 3; i < 6; i++) {
+                    for (int j = 3; j < 6; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+            if (columna >= 6 && columna < 9) {
+                for (int i = 3; i < 6; i++) {
+                    for (int j = 3; j < 6; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+        }
+        if (fila >=5 && fila<8) {
+            if (columna==0 || columna<3) {
+                for (int i = 5; i < 8; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+            if (columna >= 3 && columna < 6) {
+                for (int i = 5; i < 8; i++) {
+                    for (int j = 3; j < 6; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+            if (columna >= 6 && columna < 9) {
+                for (int i = 5; i < 8; i++) {
+                    for (int j = 3; j < 6; j++) {
+                        if (sudoku.get(i).get(j) == elemento) {
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+        }
         return resultado;
     }
 
