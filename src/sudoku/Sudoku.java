@@ -24,7 +24,14 @@ public class Sudoku
      */
     public Sudoku() 
     {
-        inicializar();
+        sudoku = new ArrayList();
+        for (int i = 0; i < 9; i++) {
+            ArrayList<Integer> lista = new ArrayList();
+            for (int j = 0; j < 9; j++) {
+                lista.add(0);
+            }
+            sudoku.add(lista);
+        }
     }
 
     /**
@@ -102,6 +109,9 @@ public class Sudoku
         if (elemento > 0 || elemento<10) {
             if (puedoInsertar(fila, columna, elemento)) {
                 sudoku.get(fila).set(columna, elemento);
+            }
+            else{
+                throw new SudokuException("este numero no puede ser insertado aqui");
             }
         }
         else{
